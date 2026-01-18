@@ -21,19 +21,22 @@ function login() {
 
       const user = data[0];
 
-      if (user["rôle"].toLowerCase() !== roleInput) {
+      // 👉 Le rôle est "rôle"
+      const userRole = user["rôle"];
+
+      if (!userRole || userRole.toLowerCase() !== roleInput) {
         alert("Rôle incorrect");
         return;
       }
 
       // Session
       localStorage.setItem("email", user.email);
-      localStorage.setItem("role", user["rôle"]);
+      localStorage.setItem("role", userRole);
 
       // Redirection simple
       document.body.innerHTML = `
         <h2>Bienvenue ${user.nom}</h2>
-        <p>Rôle : ${user["rôle"]}</p>
+        <p>Rôle : ${userRole}</p>
         <button onclick="logout()">Déconnexion</button>
       `;
     })
