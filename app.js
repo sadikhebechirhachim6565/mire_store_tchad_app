@@ -21,10 +21,10 @@ function login() {
 
       const user = data[0];
 
-      // 👉 Le rôle est "rôle"
-      const userRole = user["rôle"];
+      // 👉 Accepte "rôle" ou "role"
+      const userRole = (user["rôle"] || user["role"] || "").toLowerCase();
 
-      if (!userRole || userRole.toLowerCase() !== roleInput) {
+      if (userRole !== roleInput) {
         alert("Rôle incorrect");
         return;
       }
@@ -41,9 +41,8 @@ function login() {
       `;
     })
     .catch(error => {
-  console.error(error);
-  alert("Erreur de connexion");
-});
+      alert("Erreur de connexion : " + error.message);
+    });
 }
 
 // 🔓 Déconnexion
