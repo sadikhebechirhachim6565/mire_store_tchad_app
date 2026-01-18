@@ -21,8 +21,14 @@ function login() {
 
       const user = data[0];
 
-      // 👉 Accepte "rôle" ou "role"
-      const userRole = (user["rôle"] || user["role"] || "").toLowerCase();
+      // Acceptation avec ou sans espace
+      const userRole = (
+        user["rôle"] ||
+        user["rôle "] ||
+        user["role"] ||
+        user["role "] ||
+        ""
+      ).toLowerCase();
 
       if (userRole !== roleInput) {
         alert("Rôle incorrect");
