@@ -41,9 +41,9 @@ function login() {
       `;
     })
     .catch(error => {
-      console.error(error);
-      alert("Erreur de connexion");
-    });
+  console.error(error);
+  alert("Erreur de connexion");
+});
 }
 
 // 🔓 Déconnexion
