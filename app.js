@@ -1,18 +1,17 @@
 // 🔗 URL SheetDB
 const API_URL = "https://sheetdb.io/api/v1/rfvit8a5ilisb";
 
-// 🔐 Fonction de connexion
+// 🔐 Connexion
 function login() {
-  const email = document.getElementById("email").value.trim();
-  const roleInput = document.getElementById("role").value.trim().toLowerCase();
+  const email = document.getElementById("email").value.trim().toLowerCase();
 
-  if (!email || !roleInput) {
-    alert("Veuillez remplir tous les champs");
+  if (!email) {
+    alert("Veuillez entrer votre email");
     return;
   }
 
-  fetch(API_URL + "/search?email=" + email)
-    .then(response => response.json())
+  fetch(`${API_URL}/search?email=${email}`)
+    .then(res => res.json())
     .then(data => {
       if (data.length === 0) {
         alert("Utilisateur non trouvé");
@@ -20,60 +19,57 @@ function login() {
       }
 
       const user = data[0];
+      const role = user.role.toLowerCase();
 
-      // Acceptation avec ou sans espace
-      const userRole = (
-        user["rôle"] ||
-        user["rôle "] ||
-        user["role"] ||
-        user["role "] ||
-        ""
-      ).toLowerCase();
-
-      if (userRole !== roleInput) {
-        alert("Rôle incorrect");
-        return;
-      }
-
-      // Session
+      // 💾 Session
       localStorage.setItem("email", user.email);
-      localStorage.setItem("role", userRole);
+      localStorage.setItem("role", role);
+      localStorage.setItem("nom", user.nom);
 
-    // Affichage dashboard
-document.getElementById("login").style.display = "none";
-document.getElementById("dashboard").style.display = "block";
+      // 🎯 Interface
+      document.getElementById("login").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("welcome").innerText =
+        `Bienvenue ${user.nom} (${role})`;
 
-document.getElementById("welcome").innerText =
-  "Bienvenue " + user.nom + " (" + userRole + ")";
-
-const menu = document.getElementById("menu");
-menu.innerHTML = "";
-
-// Menus selon rôle
-if (userRole === "admin") {
-  menu.innerHTML += `<button onclick="alert('Utilisateurs')">👤 Utilisateurs</button><br><br>`;
-  menu.innerHTML += `<button onclick="alert('Colis')">📦 Colis</button><br><br>`;
-  menu.innerHTML += `<button onclick="alert('Transferts')">💸 Transferts</button><br><br>`;
-  menu.innerHTML += `<button onclick="alert('Revenus')">📊 Revenus</button>`;
-}
-
-if (userRole === "agent") {
-  menu.innerHTML += `<button onclick="alert('Colis')">📦 Colis</button><br><br>`;
-  menu.innerHTML += `<button onclick="alert('Transferts')">💸 Transferts</button>`;
-}
-
-if (userRole === "client") {
-  menu.innerHTML += `<button onclick="alert('Mes colis')">📦 Mes colis</button><br><br>`;
-  menu.innerHTML += `<button onclick="alert('Mes transferts')">💸 Mes transferts</button>`;
-}
+      loadMenu(role);
     })
-    .catch(error => {
-      alert("Erreur de connexion : " + error.message);
+    .catch(err => {
+      console.error(err);
+      alert("Erreur de connexion");
     });
+}
+
+// 📂 Menu selon rôle
+function loadMenu(role) {
+  const menu = document.getElementById("menu");
+  menu.innerHTML = "";
+
+  if (role === "admin") {
+    menu.innerHTML = `
+      <p>📊 Tableau de bord Admin</p>
+      <p>👥 Gestion des utilisateurs</p>
+      <p>💰 Revenus</p>
+    `;
+  }
+
+  if (role === "agent") {
+    menu.innerHTML = `
+      <p>📦 Enregistrer un colis</p>
+      <p>💸 Effectuer un transfert</p>
+    `;
+  }
+
+  if (role === "client") {
+    menu.innerHTML = `
+      <p>📦 Suivre mon colis</p>
+      <p>💸 Mes transferts</p>
+    `;
+  }
 }
 
 // 🔓 Déconnexion
 function logout() {
   localStorage.clear();
   location.reload();
-}
+} 
