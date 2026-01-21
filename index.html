@@ -1,49 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mire Store Tchad</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mire Store Tchad</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-  <div class="app">
+  <div id="login">
+    <h1>Mire Store Tchad</h1>
+    <p>Application de gestion de colis et transferts</p>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="logo">
-        <h2>Mire Store</h2>
-        <span>Tchad</span>
-      </div>
+    <h2>Connexion</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
+  </div>
 
-      <div id="menu" class="menu"></div>
-
-      <button class="logout-btn" onclick="logout()">Déconnexion</button>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main">
-      <div id="login" class="login-card">
-        <h2>Connexion</h2>
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Mot de passe">
-        <button onclick="login()">Se connecter</button>
-      </div>
-
-      <div id="dashboard" class="dashboard" style="display:none;">
-        <div class="header">
-          <h2 id="welcome"></h2>
-          <p class="subtitle">Tableau de bord</p>
-        </div>
-
-        <div id="content" class="content"></div>
-      </div>
-    </main>
-
+  <div id="dashboard" style="display:none;">
+    <h2 id="welcome"></h2>
+    <div id="menu"></div>
+    <div id="content"></div>
+    <button onclick="logout()">Déconnexion</button>
   </div>
 
   <script src="app.js"></script>
+
+  <!-- PWA Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log("Service Worker Registered"))
+        .catch(err => console.log("SW registration failed", err));
+    }
+  </script>
 </body>
 </html>
