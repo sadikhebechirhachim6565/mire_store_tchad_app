@@ -39,12 +39,33 @@ function login() {
       localStorage.setItem("email", user.email);
       localStorage.setItem("role", userRole);
 
-      // Redirection simple
-      document.body.innerHTML = `
-        <h2>Bienvenue ${user.nom}</h2>
-        <p>Rôle : ${userRole}</p>
-        <button onclick="logout()">Déconnexion</button>
-      `;
+    // Affichage dashboard
+document.getElementById("login").style.display = "none";
+document.getElementById("dashboard").style.display = "block";
+
+document.getElementById("welcome").innerText =
+  "Bienvenue " + user.nom + " (" + userRole + ")";
+
+const menu = document.getElementById("menu");
+menu.innerHTML = "";
+
+// Menus selon rôle
+if (userRole === "admin") {
+  menu.innerHTML += `<button onclick="alert('Utilisateurs')">👤 Utilisateurs</button><br><br>`;
+  menu.innerHTML += `<button onclick="alert('Colis')">📦 Colis</button><br><br>`;
+  menu.innerHTML += `<button onclick="alert('Transferts')">💸 Transferts</button><br><br>`;
+  menu.innerHTML += `<button onclick="alert('Revenus')">📊 Revenus</button>`;
+}
+
+if (userRole === "agent") {
+  menu.innerHTML += `<button onclick="alert('Colis')">📦 Colis</button><br><br>`;
+  menu.innerHTML += `<button onclick="alert('Transferts')">💸 Transferts</button>`;
+}
+
+if (userRole === "client") {
+  menu.innerHTML += `<button onclick="alert('Mes colis')">📦 Mes colis</button><br><br>`;
+  menu.innerHTML += `<button onclick="alert('Mes transferts')">💸 Mes transferts</button>`;
+}
     })
     .catch(error => {
       alert("Erreur de connexion : " + error.message);
