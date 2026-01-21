@@ -1,0 +1,87 @@
+/* ====== STYLE PRO - MIRE STORE TCHAD ====== */
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f6f7fb;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+
+h2 {
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+p {
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: #2b7cff;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+button.logout {
+  background: #ff4d4d;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu button {
+  background: #f0f3ff;
+  color: #1a1a1a;
+  font-weight: bold;
+}
+
+.menu button.active {
+  background: #2b7cff;
+  color: white;
+}
+
+.item {
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f4f5f8;
+}
