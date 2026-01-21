@@ -1,3 +1,78 @@
+
+// Au démarrage
+window.onload = () => {
+  if(localStorage.getItem("email")){
+    showDashboard();
+    function showDashboard() {
+  const role = localStorage.getItem("role");
+  const name = localStorage.getItem("name");
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+  document.getElementById("welcome").innerText = `Bienvenue ${name} (${role})`;
+
+  const menu = document.getElementById("menu");
+  menu.innerHTML = "";
+
+  // MENU
+  addMenu("Dashboard", dashboardHome);
+  addMenu("Colis", gestionColis);
+
+  if (role === "admin") {
+    addMenu("Utilisateurs", gestionUsers);
+    addMenu("Transferts", gestionTransferts);
+    addMenu("Revenus", gestionRevenus);
+  }
+
+  if (role === "agent") {
+    addMenu("Transferts", gestionTransferts);
+  }
+
+  if (role === "client") {
+    addMenu("Suivi colis", suiviColis);
+  }
+
+  // Affiche la page d'accueil par défaut
+  dashboardHome();
+}
+
+function dashboardHome() {
+  document.getElementById("content").innerHTML = `
+    <div class="item">
+      <h2>📊 Tableau de bord</h2>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Total Colis</h3>
+          <p id="totalColis">...</p>
+        </div>
+        <div class="card">
+          <h3>Colis Livrés</h3>
+          <p id="livres">...</p>
+        </div>
+        <div class="card">
+          <h3>Colis En attente</h3>
+          <p id="attente">...</p>
+        </div>
+        <div class="card">
+          <h3>Colis En transit</h3>
+          <p id="transit">...</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  fetch(API_URL + "/colis")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("totalColis").innerText = data.length;
+      document.getElementById("livres").innerText = data.filter(c => c.statut.toLowerCase() === "livré").length;
+      document.getElementById("attente").innerText = data.filter(c => c.statut.toLowerCase() === "en attente").length;
+      document.getElementById("transit").innerText = data.filter(c => c.statut.toLowerCase() === "en transit").length;
+    });
+}
+  }
+};
 // ====== COLIS ======
 function gestionColis() {
   document.getElementById("content").innerHTML = `

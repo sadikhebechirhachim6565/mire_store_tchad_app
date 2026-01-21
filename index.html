@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mire Store Tchad</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mire Store Tchad</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <div class="container">
 
-    <div id="login" class="card">
-      <h1>Connexion</h1>
-      <input type="email" id="email" placeholder="Email">
-      <input type="password" id="password" placeholder="Mot de passe">
-      <button onclick="login()">Se connecter</button>
-    </div>
+  <div class="app">
 
-    <div id="dashboard" class="card" style="display:none;">
-      <h1 id="welcome"></h1>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <h2>Mire Store</h2>
+        <span>Tchad</span>
+      </div>
+
       <div id="menu" class="menu"></div>
-      <button class="logout" onclick="logout()">Déconnexion</button>
-      <div id="content"></div>
-    </div>
+
+      <button class="logout-btn" onclick="logout()">Déconnexion</button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div id="login" class="login-card">
+        <h2>Connexion</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Mot de passe">
+        <button onclick="login()">Se connecter</button>
+      </div>
+
+      <div id="dashboard" class="dashboard" style="display:none;">
+        <div class="header">
+          <h2 id="welcome"></h2>
+          <p class="subtitle">Tableau de bord</p>
+        </div>
+
+        <div id="content" class="content"></div>
+      </div>
+    </main>
 
   </div>
 
